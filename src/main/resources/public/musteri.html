@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Müşteri Kayıt</title>
+</head>
+<body>
+
+        <label>Adınız....: </label>
+        <input type="text" name="ad" id="ad"><br>
+        <label>Soyadınız....: </label>
+        <input type="text" name="soyad" id="soyad"><br>
+        <label>Kullanıcı Adınız....: </label>
+        <input type="text" name="userName" id="userName"><br>
+        <label>Şifreniz....: </label>
+        <input type="text" name="password" id="password"><br>
+        <button type="submit" onclick="save()">Kaydet</button>
+
+        <script>
+            function save(){
+                let ad = document.getElementById("ad").value;
+                let soyad = document.getElementById("soyad").value;
+                let userName = document.getElementById("userName").value;
+                let password = document.getElementById("password").value;
+                fetch("/musteri/save",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        ad, soyad, userName, password
+                    })
+                })
+            }
+
+        </script>
+</body>
+</html>

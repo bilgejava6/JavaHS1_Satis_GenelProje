@@ -16,6 +16,16 @@ import java.util.List;
 @Service
 public class MusteriService {
 
+    /**
+     * DİKKAT!!!!!!
+     * Her servis kendi iletişimdeki katmanı ile işlmelerini yapar, yani;
+     * MusteriServis -> MusteriRepository yi kullanır. Başka bir Repository
+     * sınıfını içeriye almaz ya da yönetemez.
+     * PEKİ YA DİĞER VERİLERE İHTİYACIM OLURSA
+     * Bir servis diğer bir servis ile iletişime geçer, yani başka bir repository ile işiniz var ise
+     * bunu ilgili repositorynini servisi ile çözeceksiniz.
+     *
+     */
     private final MusteriRepository musteriRepository;
 
     /**

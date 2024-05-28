@@ -1,8 +1,10 @@
 package com.muhammet.satis.repository;
 
 import com.muhammet.satis.entity.Musteri;
+import com.muhammet.satis.entity.view.VwMusteriArama;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -203,11 +205,55 @@ public interface MusteriRepository extends JpaRepository<Musteri,Long> {
      */
     List<Musteri> findAllByAdEndingWith(String ad);
 
+    /**
+     * Queries
+     * DİKKAT!!!!!!
+     * Spring bir method için query yazdığınızda method adı ile işi biter, yani özel keyword ler
+     * kullanmak zorunda değilsiniz. Spring ilgili methodun işlevini anahtar kelimeler yerine
+     * query içerisine yazığınız SQL cümlesi üzerinden yürütür.
+     * HQL, JPQL, NATIVESQL
+     */
 
+    /**
+     *
+     * JPQL Kullanım örnekleri
+     */
+    @Query("select m from Musteri m")
+    List<Musteri> tumMusterileriGetir();
 
+    @Query("select m from Musteri m where m.ad= ?1")
+    List<Musteri> adinaGoreHepsiniGetir(String ad);
 
+    @Query("select m from Musteri m where m.ad= ?3 and m.soyad= ?1 and m.adres=?2 ")
+    List<Musteri> adVeSoyadVeAdresineGoreGetir(String soyad,String adres,String ad);
 
+    /**
+     * NativeSQL Kullanım örneği
+     *
+     */
+    @Query(value = "select * from Musteri where telefon= ?1", nativeQuery = true)
+    List<Musteri> findAllByTelefon(String telefon);
 
+    /**
+     * Sorrgularda Parametre kullanımı
+     */
+    @Query("select m from Musteri m where m.userName like :userName and m.yas> :yasinDegeri")
+    List<Musteri> userNameIleAra(
+            @Param("userName") String userName,
+            @Param("yasinDegeri") Integer musteriYasi);
+
+    /**
+     * Return type ı Entity dışında olan sorgular, Boolen, Integer, Long v.s.
+     */
+    @Query("select COUNT (m)>0 from Musteri m where m.userName= ?1 and m.password= ?2")
+    Boolean kullaniciyiDogrula(String userName, String password);
+
+    /**
+     * View kullanımını özel sınıflar kullanarak aktif edebiliriz. Burada amaç performans artışı ve
+     * gereksiz sorguların önüne geçmek.
+     */
+    @Query("select new com.muhammet.satis.entity.view.VwMusteriArama(m.id,m.ad,m.userName) from Musteri m where m.userName like ?1")
+    List<VwMusteriArama> findAllByUserNameLike(String userName);
 
 
 
