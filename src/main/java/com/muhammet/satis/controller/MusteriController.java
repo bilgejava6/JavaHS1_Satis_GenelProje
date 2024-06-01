@@ -2,14 +2,15 @@ package com.muhammet.satis.controller;
 
 import com.muhammet.satis.dto.request.MusteriSaveRequestDto;
 import com.muhammet.satis.entity.Musteri;
-import com.muhammet.satis.repository.MusteriRepository;
 import com.muhammet.satis.service.MusteriService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
+
+import static com.muhammet.satis.config.RestApis.*;
 
 @RestController
 /**
@@ -34,7 +35,7 @@ import java.util.Objects;
  * Bu ifade URL yi filtreleyerek ilgili sınıfa yönlenmesini sağlar. Yani;
  * http://localhost:9090/musteri şeklinde gelen bir isteğin yakalanarak bu sınıfa yönlenmesi sağlanır.
  */
-@RequestMapping("/musteri")
+@RequestMapping(MUSTERI)
 @RequiredArgsConstructor
 public class MusteriController {
     private final MusteriService musteriService;
@@ -60,23 +61,32 @@ public class MusteriController {
      * }
      *
      */
-    @PostMapping("/save")
+    @PostMapping(SAVE)
     @CrossOrigin("*")
-    public void save(@RequestBody MusteriSaveRequestDto dto){
-        Musteri musteri = Musteri.builder()
-                .ad(dto.getAd())
-                .soyad(dto.getSoyad())
-                .userName(dto.getUserName())
-                .password(dto.getPassword())
-                .build();
-        musteriService.save(musteri);
-    }
-    // GET: http://localhost:9090/musteri/get-all
-    @GetMapping("/get-all")
-    public ResponseEntity<List<Musteri>> getAll(){
-        return ResponseEntity.ok(musteriService.getAll());
+    public void save(@RequestBody @Valid MusteriSaveRequestDto dto){
+        /**
+         * DİKKAT!!!!!!
+         * Controller katmanında iş katmanının görevlerini yapamazsınız. Gelen datanın
+         * dönüştürülmesi işlemi Servis in görevidir.
+         * AŞAĞIDAKİ KULLANIM YANLIŞTIR
+         */
+//        Musteri musteri = Musteri.builder()
+//                .ad(dto.getAd())
+//                .soyad(dto.getSoyad())
+//                .userName(dto.getUserName())
+//                .password(dto.getPassword())
+//                .build();
+//        musteriService.save(musteri);
+        musteriService.save(dto);
     }
 
+
+    // GET: http://localhost:9090/musteri/get-all
+    @GetMapping(GETALL)
+    public ResponseEntity<List<Musteri>> getAll(){
+        throw new RuntimeException("Beklenmeyen bişey oldu");
+//        return ResponseEntity.ok(musteriService.getAll());
+    }
 
 
 }

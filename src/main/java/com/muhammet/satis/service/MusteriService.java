@@ -1,5 +1,6 @@
 package com.muhammet.satis.service;
 
+import com.muhammet.satis.dto.request.MusteriSaveRequestDto;
 import com.muhammet.satis.entity.Musteri;
 import com.muhammet.satis.repository.MusteriRepository;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,16 @@ public class MusteriService {
     }
     public void save(Musteri musteri){
         musteriRepository.save(musteri);
+    }
+
+    public void save(MusteriSaveRequestDto dto){
+        musteriRepository.save(Musteri.builder()
+                        .password(dto.getPassword())
+                        .userName(dto.getUserName())
+                        .soyad(dto.getSoyad())
+                        .ad(dto.getAd())
+                        .isActive(true)
+                .build());
     }
 
     public List<Musteri> getAll(){
