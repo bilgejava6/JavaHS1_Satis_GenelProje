@@ -8,14 +8,14 @@
 ## DİKKAT!!! env değeri uygulama başlatıldıktan sonra eklenirse uygulama bu değeri çekemez.
 
 server:
-  port: ${APPLICATION_PORT}
+  port: 9090
 
 spring:
   datasource:
-    driver-class-name: ${POSTGRE_DRIVER}
-    url: ${POSTGRE_URL}
-    username: ${POSTGRE_USER}
-    password: ${POSTGRE_PASS}
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5444/SpringSatisDB
+    username: postgres
+    password: root
   jpa:
     hibernate:
       ddl-auto: create-drop # create, create-drop
@@ -27,7 +27,7 @@ spring:
 # Burada yazılanlar tamamen kenidimizin oluşturduğu configler
 my-application:
   naber-genclik: "iyidir hocam"
-  depo: "Ankara"
+  depo: "Ankara-TEST"
   depo2: ${DEPO_ADI}
   kullanici-bilgileri:
     user-name: "muhammet hoca"

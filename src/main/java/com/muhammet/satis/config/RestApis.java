@@ -18,5 +18,6 @@ public class RestApis {
     public static final String FINDBYID = "/find-by-id";
     public static final String DELETE = "/delete";
 
+    public static final String DEPO = "/get-depo";
 
 }

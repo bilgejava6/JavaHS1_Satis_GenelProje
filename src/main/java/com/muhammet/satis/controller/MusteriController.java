@@ -2,6 +2,8 @@ package com.muhammet.satis.controller;
 
 import com.muhammet.satis.dto.request.MusteriSaveRequestDto;
 import com.muhammet.satis.entity.Musteri;
+import com.muhammet.satis.exception.ErrorType;
+import com.muhammet.satis.exception.SatisException;
 import com.muhammet.satis.service.MusteriService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +86,7 @@ public class MusteriController {
     // GET: http://localhost:9090/musteri/get-all
     @GetMapping(GETALL)
     public ResponseEntity<List<Musteri>> getAll(){
-        throw new RuntimeException("Beklenmeyen bişey oldu");
+        throw new SatisException(ErrorType.INTERNAL_SERVER_ERROR_NOT_FOUND_DATA);
 //        return ResponseEntity.ok(musteriService.getAll());
     }
 
